@@ -1,0 +1,39 @@
+---
+/**
+ * Embed a playable build or video.
+ *  <MediaEmbed type="youtube" src="https://www.youtube.com/watch?v=ID" title="Gameplay trailer" />
+ *  <MediaEmbed type="itch" src="https://itch.io/embed-upload/123456?color=333333" title="Play in browser" />
+ *  <MediaEmbed type="video" src="/projects/my-game/clip.mp4" title="Core loop" />
+ */
+import { url } from '../utils';
+
+interface Props {
+  type: 'youtube' | 'itch' | 'video' | 'iframe';
+  src: string;
+  title: string;
+  caption?: string;
+}
+const { type, src, title, caption } = Astro.props;
+
+const youtubeId = (s: string) => s.match(/(?:v=|youtu\.be\/|embed\/)([\w-]{11})/)?.[1];
+const embedSrc =
+  type === 'youtube' ? `https://www.youtube-nocookie.com/embed/${youtubeId(src) ?? src}` : url(src);
+---
+<figure class="embed">
+  <div class={`frame ${type}`}>
+    {type === 'video' ? (
+      <video src={embedSrc} controls playsinline preload="metadata" aria-label={title}></video>
+    ) : (
+      <iframe src={embedSrc} title={title} loading="lazy" allowfullscreen
+        allow="autoplay; fullscreen; picture-in-picture; gamepad"></iframe>
+    )}
+  </div>
+  {caption && <figcaption>{caption}</figcaption>}
+</figure>
+
+<style>
+  .embed { margin: 1.8em 0; }
+  .frame { aspect-ratio: 16 / 9; border-radius: var(--radius); overflow: hidden; background: #000; border: 1px solid var(--line); }
+  .frame iframe, .frame video { width: 100%; height: 100%; border: 0; }
+  figcaption { font-size: .88rem; color: var(--muted); margin-top: 8px; }
+</style>

@@ -1,0 +1,70 @@
+---
+# ─────────────────────────────────────────────────────────────
+# HOW TO ADD A PROJECT
+# 1. Copy this file and rename it, e.g. my-game.mdx (the name becomes the URL: /projects/my-game/)
+# 2. Put images/videos in public/projects/my-game/
+# 3. Fill in the fields below and write the sections. Delete what you don't need.
+# Files starting with "_" are ignored, so this template never appears on the site.
+# ─────────────────────────────────────────────────────────────
+title: Project Title
+tagline: One sentence on what the player does and why it matters.
+year: 2026
+role: Narrative Designer          # your role, e.g. "Solo developer", "Game & Narrative Design"
+team: 4 people                    # optional
+duration: 48 hours                # e.g. "48h game jam", "3 months"
+tools: [Unity, Ink, Figma]
+status: jam                       # jam | prototype | student | released | in-progress
+tags: [Narrative, Systems]
+featured: true                    # true = shown on the home page (best 2–4 projects)
+order: 1                          # lower = shown first
+draft: false                      # true = hidden everywhere
+cover:
+  src: /projects/my-game/cover.png
+  alt: Describe the image for screen readers
+designQuestion: How can a [mechanic] make the player feel [emotion] about [theme]?
+mechanicMap:                      # the heart of the case study: 1–4 rows
+  - mechanic: What the player does (a verb)
+    meaning: What that action represents in the story
+    feeling: What the player feels as a result
+playUrl: https://yourname.itch.io/my-game    # optional
+videoUrl: https://youtu.be/XXXXXXXXXXX       # optional
+docsUrl: https://...                         # optional link to a GDD / pitch doc
+---
+import MediaEmbed from '../../components/MediaEmbed.astro';
+import ProcessGallery from '../../components/ProcessGallery.astro';
+import Callout from '../../components/Callout.astro';
+
+## The premise
+
+Short context: the brief or jam theme, the story, and the player fantasy. Two or three paragraphs at most.
+
+## Why this mechanic
+
+Explain how you arrived at the core verb. What else did you consider, and why does this one carry the theme best?
+
+<Callout kind="insight">
+The one-sentence realization that made the design click.
+</Callout>
+
+## Process
+
+<ProcessGallery items={[
+  { src: '/projects/my-game/sketch.png', alt: 'Paper sketch of the core loop', caption: 'First paper prototype' },
+  { src: '/projects/my-game/flow.png', alt: 'Branching flowchart', caption: 'Narrative branching, v2' },
+]} />
+
+Describe the iterations: what you tested, what playtesters did, what you changed.
+
+<Callout kind="failed">
+Something that didn't work, and what it taught you. Recruiters love this part.
+</Callout>
+
+## Play it
+
+<MediaEmbed type="youtube" src="https://youtu.be/XXXXXXXXXXX" title="Gameplay video" caption="2-minute playthrough of the core loop." />
+
+## Reflection
+
+- **What worked:** …
+- **What I'd change:** …
+- **What I'd take to the next project:** …

@@ -1,0 +1,30 @@
+---
+/**
+ * Show process artifacts: sketches, flowcharts, branching maps, iterations.
+ *  <ProcessGallery items={[{ src: '/projects/x/flow.png', alt: '...', caption: 'v1 branching' }]} />
+ */
+import { url } from '../utils';
+
+interface Props {
+  items: { src: string; alt: string; caption?: string }[];
+}
+const { items } = Astro.props;
+---
+<div class="gallery">
+  {items.map((i, n) => (
+    <figure>
+      <a href={url(i.src)} target="_blank" rel="noopener">
+        <img src={url(i.src)} alt={i.alt} loading="lazy" />
+      </a>
+      {i.caption && <figcaption><span>{String(n + 1).padStart(2, '0')}</span> {i.caption}</figcaption>}
+    </figure>
+  ))}
+</div>
+
+<style>
+  .gallery { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 16px; margin: 1.8em 0; }
+  figure { margin: 0; }
+  img { width: 100%; aspect-ratio: 4 / 3; object-fit: cover; border-radius: 10px; border: 1px solid var(--line); margin: 0 !important; background: var(--surface-2); }
+  figcaption { font-size: .85rem; color: var(--muted); margin-top: 6px; }
+  figcaption span { color: var(--accent); font-weight: 600; }
+</style>

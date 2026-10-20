@@ -1,0 +1,21 @@
+---
+import type { CollectionEntry } from 'astro:content';
+import { url } from '../utils';
+
+interface Props { note: CollectionEntry<'notes'>; }
+const { note } = Astro.props;
+const d = note.data;
+const date = d.date.toLocaleDateString('en-US', { year: 'numeric', month: 'short', timeZone: 'UTC' });
+---
+<a class="note" href={url(`/notes/${note.id}/`)}>
+  <p class="eyebrow">{d.kind} · {date}</p>
+  <h3>{d.title}</h3>
+  <p class="sum">{d.summary}</p>
+</a>
+
+<style>
+  .note { display: block; text-decoration: none; padding: 22px 0; border-top: 1px solid var(--line); }
+  .note:hover h3 { color: var(--accent); }
+  .note > * { margin: 0 0 6px; }
+  .sum { color: var(--muted); max-width: 70ch; margin: 0; }
+</style>

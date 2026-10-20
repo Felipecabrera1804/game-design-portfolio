@@ -1,0 +1,30 @@
+---
+import { render } from 'astro:content';
+import Base from '../../layouts/Base.astro';
+import { getNotes, url } from '../../utils';
+
+export async function getStaticPaths() {
+  const notes = await getNotes();
+  return notes.map((note) => ({ params: { slug: note.id }, props: { note } }));
+}
+
+const { note } = Astro.props;
+const d = note.data;
+const { Content } = await render(note);
+const date = d.date.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric', timeZone: 'UTC' });
+---
+<Base title={d.title} description={d.summary}>
+  <article class="wrap note">
+    <a class="back" href={url('/notes/')}>← All notes</a>
+    <p class="eyebrow">{d.kind} · {date}</p>
+    <h1>{d.title}</h1>
+    <p class="sum">{d.summary}</p>
+    <div class="prose"><Content /></div>
+  </article>
+</Base>
+
+<style>
+  .note { padding-block: 48px; max-width: calc(var(--prose) + 40px); }
+  .back { font-size: .9rem; color: var(--muted); text-decoration: none; display: inline-block; margin-bottom: 24px; }
+  .sum { font-size: 1.2rem; color: var(--muted); margin-bottom: 40px; }
+</style>

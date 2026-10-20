@@ -1,0 +1,41 @@
+---
+// The signature block of every case study: what the player DOES → what it MEANS → how it FEELS.
+interface Props {
+  rows: { mechanic: string; meaning: string; feeling: string }[];
+}
+const { rows } = Astro.props;
+---
+<div class="mm" role="table" aria-label="Mechanic to narrative mapping">
+  <div class="row head" role="row">
+    <span role="columnheader">The player does</span>
+    <span role="columnheader">Which means</span>
+    <span role="columnheader">So they feel</span>
+  </div>
+  {rows.map((r) => (
+    <div class="row" role="row">
+      <span role="cell" class="mech"><b class="label">Does</b>{r.mechanic}</span>
+      <span role="cell"><b class="label">Means</b>{r.meaning}</span>
+      <span role="cell" class="feel"><b class="label">Feels</b>{r.feeling}</span>
+    </div>
+  ))}
+</div>
+
+<style>
+  .mm { border: 1px solid var(--line); border-radius: var(--radius); overflow: hidden; background: var(--surface); margin: 1.5em 0; }
+  .row { display: grid; grid-template-columns: 1fr 1.2fr 1fr; }
+  .row + .row { border-top: 1px solid var(--line); }
+  .row span { padding: 16px 18px; position: relative; }
+  .row span + span { border-left: 1px solid var(--line); }
+  .head { background: var(--surface-2); }
+  .head span { font-size: .75rem; letter-spacing: .12em; text-transform: uppercase; font-weight: 600; color: var(--muted); padding-block: 10px; }
+  .mech { font-weight: 600; }
+  .feel { font-family: var(--font-display); font-style: italic; color: var(--accent); }
+  .label { display: none; }
+
+  @media (max-width: 640px) {
+    .head { display: none; }
+    .row { grid-template-columns: 1fr; }
+    .row span + span { border-left: 0; padding-top: 0; }
+    .label { display: block; font: 600 .7rem/1.6 var(--font-body); letter-spacing: .12em; text-transform: uppercase; color: var(--muted); font-style: normal; }
+  }
+</style>

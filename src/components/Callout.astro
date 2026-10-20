@@ -1,0 +1,22 @@
+---
+/**
+ *  <Callout kind="insight">The moment it clicked…</Callout>
+ *  <Callout kind="failed" title="What didn't work">…</Callout>
+ */
+interface Props { kind?: 'insight' | 'failed' | 'note'; title?: string; }
+const { kind = 'insight', title } = Astro.props;
+const defaults = { insight: 'Key insight', failed: "What didn't work", note: 'Note' };
+---
+<aside class={`callout ${kind}`}>
+  <p class="t">{title ?? defaults[kind]}</p>
+  <div><slot /></div>
+</aside>
+
+<style>
+  .callout { border-radius: 12px; padding: 16px 20px; margin: 1.6em 0; background: var(--surface); border: 1px solid var(--line); border-left: 4px solid var(--accent); }
+  .callout.failed { border-left-color: var(--muted); }
+  .callout.note { border-left-color: var(--line); }
+  .t { font-size: .75rem; letter-spacing: .12em; text-transform: uppercase; font-weight: 600; color: var(--accent); margin: 0 0 6px; }
+  .failed .t { color: var(--muted); }
+  .callout :global(p:last-child) { margin-bottom: 0; }
+</style>

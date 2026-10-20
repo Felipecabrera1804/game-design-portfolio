@@ -1,0 +1,106 @@
+---
+import Base from '../layouts/Base.astro';
+import ProjectCard from '../components/ProjectCard.astro';
+import NoteItem from '../components/NoteItem.astro';
+import { site } from '../site';
+import { getProjects, getNotes, chapter, url } from '../utils';
+
+const projects = await getProjects();
+const featured = projects.filter((p) => p.data.featured);
+const shown = (featured.length ? featured : projects).slice(0, 4);
+const notes = (await getNotes()).slice(0, 3);
+
+// Layout scales with how much work there is:
+//  1–2 projects → each gets a full-width hero (alternating sides), so the page feels curated, not empty.
+//  3+ projects  → one hero, the rest in a grid.
+const allHero = shown.length <= 2;
+const [lead, ...rest] = shown;
+
+// Chapter numbers stay sequential even when a section is hidden.
+const sections = ['work', 'pillars', ...(notes.length ? ['notes'] : []), 'contact'];
+const n = (id: string) => chapter(sections.indexOf(id));
+---
+<Base>
+  <section class="intro">
+    <div class="wrap">
+      <p class="eyebrow">{site.role}</p>
+      <h1>{site.thesis}</h1>
+      <p class="lede">{site.intro}</p>
+      <div class="cta">
+        <a class="btn" href="#work">See the work</a>
+        <a class="btn ghost" href={url('/about/')}>About me</a>
+      </div>
+    </div>
+  </section>
+
+  {lead && (
+    <section class="section" id="work">
+      <div class="wrap">
+        <div class="chapter">
+          <span class="num">{n('work')}.</span><h2>Selected work</h2>
+          {projects.length > shown.length && <a class="more" href={url('/projects/')}>All {projects.length} projects →</a>}
+        </div>
+        {allHero ? (
+          <div class="stack">
+            {shown.map((p, i) => <ProjectCard project={p} variant="hero" reverse={i % 2 === 1} />)}
+          </div>
+        ) : (
+          <div class="stack">
+            <ProjectCard project={lead} variant="hero" />
+            <div class="grid">{rest.map((p) => <ProjectCard project={p} />)}</div>
+          </div>
+        )}
+      </div>
+    </section>
+  )}
+
+  <section class="section">
+    <div class="wrap">
+      <div class="chapter"><span class="num">{n('pillars')}.</span><h2>What I explore</h2></div>
+      <div class="pillars">
+        {site.pillars.map((p, i) => (
+          <div class="pillar">
+            <span class="idx">{String(i + 1).padStart(2, '0')}</span>
+            <h3>{p.title}</h3>
+            <p>{p.body}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  {notes.length > 0 && (
+    <section class="section">
+      <div class="wrap">
+        <div class="chapter">
+          <span class="num">{n('notes')}.</span><h2>Design notes</h2>
+          <a class="more" href={url('/notes/')}>All notes →</a>
+        </div>
+        <div>{notes.map((note) => <NoteItem note={note} />)}</div>
+      </div>
+    </section>
+  )}
+
+  <section class="section">
+    <div class="wrap contact">
+      <div class="chapter"><span class="num">{n('contact')}.</span><h2>Let's make something that means it</h2></div>
+      <p>Open to narrative design, game design and level/systems design roles, as well as jams and collaborations.</p>
+      <a class="btn" href={`mailto:${site.email}`}>{site.email}</a>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .intro { padding: 96px 0 72px; }
+  .intro h1 { max-width: 18ch; margin-top: 12px; }
+  .lede { font-size: 1.2rem; color: var(--muted); max-width: 56ch; }
+  .cta { display: flex; gap: 12px; flex-wrap: wrap; margin-top: 28px; }
+  .stack { display: flex; flex-direction: column; gap: 28px; }
+  .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 28px; }
+  .pillars { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 32px; }
+  .pillar .idx { font-family: var(--font-display); font-style: italic; color: var(--accent); }
+  .pillar h3 { margin-top: 8px; }
+  .pillar p { color: var(--muted); }
+  .contact p { max-width: 56ch; color: var(--muted); }
+  @media (max-width: 600px) { .intro { padding: 56px 0 40px; } .grid { grid-template-columns: 1fr; } }
+</style>

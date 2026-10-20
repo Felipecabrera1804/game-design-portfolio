@@ -1,0 +1,21 @@
+---
+import Base from '../../layouts/Base.astro';
+import NoteItem from '../../components/NoteItem.astro';
+import { getNotes } from '../../utils';
+
+const notes = await getNotes();
+---
+<Base title="Design notes" description="Game analyses, small experiments and jam write-ups.">
+  <section class="section">
+    <div class="wrap">
+      <p class="eyebrow">Notes</p>
+      <h1>Design notes</h1>
+      <p class="lede">Analyses of games I admire, small prototypes and jam postmortems, written down so I can think out loud.</p>
+      {notes.length ? notes.map((n) => <NoteItem note={n} />) : <p>Nothing here yet.</p>}
+    </div>
+  </section>
+</Base>
+
+<style>
+  .lede { color: var(--muted); max-width: 60ch; font-size: 1.1rem; margin-bottom: 32px; }
+</style>
