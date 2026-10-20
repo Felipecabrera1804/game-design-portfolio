@@ -30,7 +30,7 @@ Add a `.md` file to `src/content/notes/` (copy an existing one). Notes show up o
 - `src/pages/about.astro`: about text.
 - `src/styles/global.css`: colors and fonts (tokens at the top).
 - Put your CV at `public/cv.pdf`.
-- Remove the example projects (`paper-lanterns.mdx`, `hold-still.mdx`) once you've added your own.
+- Replace the placeholder projects (`project-one.mdx`, `project-two.mdx`) and notes (`placeholder-*.md`) with your own. Everything in `[square brackets]` is a placeholder.
 
 ## Deploy (GitHub Pages)
 

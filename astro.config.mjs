@@ -6,6 +6,6 @@ import mdx from '@astrojs/mdx';
 // (or leave base as '/' if the repo is named <user>.github.io).
 export default defineConfig({
   site: 'https://felipecabrera1804.github.io',
-  base: '/',
+  base: '/game-design-portfolio',
   integrations: [mdx()],
 });

@@ -1,29 +1,32 @@
 // Edit this file to change your name, thesis and links everywhere on the site.
+// Anything in [square brackets] is a placeholder to replace with your own words.
 export const site = {
   name: 'Felipe Cabrera',
   role: 'Narrative & Game Designer',
-  thesis: 'I design games where the story lives in what you do, not just what you read.',
+  thesis: '[Your thesis: one sentence on what kind of games you design and why]',
   intro:
-    'I build narrative experiences where mechanics carry meaning — where a verb, a rule or a constraint is the most honest way to tell the story.',
+    '[Placeholder: 1–2 sentences expanding the thesis: what you focus on, and how mechanics and narrative relate in your work.]',
   email: 'felipecabre1804@gmail.com',
   links: [
     { label: 'itch.io', href: 'https://itch.io' },
     { label: 'LinkedIn', href: 'https://linkedin.com' },
     { label: 'CV (PDF)', href: '/cv.pdf' },
   ],
-  // Three things you explore. Shown on the home page; they give the site a point of view.
+  // Three themes or design interests you keep coming back to. They give the site a point of view.
   pillars: [
     {
-      title: 'Mechanics as metaphor',
-      body: 'Finding the verb that carries the story, so the player understands a theme by doing it.',
+      title: '[Design interest 1]',
+      body: '[Placeholder: a theme or question you explore in your work, explained in one sentence.]',
     },
     {
-      title: 'Systems that remember',
-      body: 'Consequences that pile up across play, so choices feel owned instead of picked from a menu.',
+      title: '[Design interest 2]',
+      body: '[Placeholder: a second recurring interest, e.g. a type of mechanic, structure or player experience.]',
     },
     {
-      title: 'Friction with purpose',
-      body: 'Using discomfort, limits and scarcity on purpose, to make the player feel something.',
+      title: '[Design interest 3]',
+      body: '[Placeholder: a third interest. Ideally each one can be backed up by at least one project or note.]',
     },
   ],
+  // Shown in the contact section at the bottom of the home page.
+  availability: '[Placeholder: what kind of roles, collaborations or jams you are looking for.]',
 };
